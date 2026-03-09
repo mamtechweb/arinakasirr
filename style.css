@@ -1,0 +1,14 @@
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #f1f1f1; border-radius: 10px; }
+
+.product-card {
+    background: white; border-radius: 20px; padding: 15px;
+    border: 1px solid #f8f8f8; cursor: pointer; transition: 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.product-card:hover { 
+    transform: translateY(-3px); 
+    border-color: #FF5F00;
+    box-shadow: 0 10px 20px rgba(255, 95, 0, 0.1);
+}
