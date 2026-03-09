@@ -190,7 +190,7 @@ function prosesPembayaran() {
             </div>
             
             <p style="margin-top: 10px; font-weight: bold;">SEMOGA HARI ANDA MENYENANGKAN</p>
-            <p style="font-style: italic; font-size: 9px; margin-top: 5px; color: #888;">MAMTECH POS v3.0</p>
+            <p style="font-style: italic; font-size: 9px; margin-top: 5px; color: #888;">Toko Arina v3.0</p>
         </div>
     </body>
         </html>
