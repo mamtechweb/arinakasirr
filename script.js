@@ -132,7 +132,7 @@ function prosesPembayaran() {
     const receiptHTML = `
         <html>
         <head>
-            <title>STRUK MAMTECH</title>
+            <title>TOKO ARINA </title>
             <style>
                 body { font-family: 'Courier New', monospace; width: 300px; margin: 20px auto; padding: 10px; border: 1px solid #eee; }
                 .center { text-align: center; }
@@ -142,28 +142,57 @@ function prosesPembayaran() {
                 @media print { .no-print { display: none; } }
             </style>
         </head>
-        <body>
-            <button class="btn-print no-print" onclick="window.print()">🖨️ CETAK SEKARANG</button>
-            <div class="center">
-                <h3 style="margin:0;">MAMTECH STORE</h3>
-                <p style="font-size:11px; margin:0;">Sumenep, Jawa Timur</p>
-                <div class="line"></div>
-            </div>
-            ${cart.map(i => `<div class="flex"><span>${i.name} x${i.qty}</span><span>${(i.qty * i.price).toLocaleString()}</span></div>`).join('')}
+       <body>
+        <button class="btn-print no-print" onclick="window.print()">🖨️ CETAK SEKARANG</button>
+        
+        <div class="center">
+            <h3 style="margin:0; font-size: 18px;">TOKO ARINA</h3>
+            <p style="font-size:11px; margin:0;">JL. Merpati GG V Pamolokan</p>
+            <p style="font-size:11px; margin:0;">Sumenep, Jawa Timur</p>
             <div class="line"></div>
-            <div class="flex" style="font-weight:bold; font-size:15px;"><span>TOTAL</span><span>Rp ${total.toLocaleString()}</span></div>
-            <div class="flex" style="font-size:11px;"><span>METODE</span><span>${method}</span></div>
-            ${method === "Tunai" ? `
-                <div class="flex" style="font-size:11px;"><span>BAYAR</span><span>Rp ${cash.toLocaleString()}</span></div>
-                <div class="flex" style="font-weight:bold;"><span>KEMBALI</span><span>Rp ${change.toLocaleString()}</span></div>
-            ` : `<p style="text-align:right; font-weight:bold;">LUNAS</p>`}
-            <div class="line"></div>
-            <div class="center" style="font-size:10px;">
-                <p>KASIR: ${currentUser}</p>
-                <p>${date}</p>
-                <p>Terima Kasih Atas Kunjungan Anda!</p>
+        </div>
+
+        ${cart.map(i => `
+            <div class="flex">
+                <span>${i.name} x${i.qty}</span>
+                <span>${(i.qty * i.price).toLocaleString()}</span>
             </div>
-        </body>
+        `).join('')}
+        
+        <div class="line"></div>
+        
+        <div class="flex" style="font-weight:bold; font-size:16px;">
+            <span>TOTAL</span>
+            <span>Rp ${total.toLocaleString()}</span>
+        </div>
+        
+        <div class="flex" style="font-size:11px;">
+            <span>METODE</span>
+            <span>${method}</span>
+        </div>
+
+        ${method === "Tunai" ? `
+            <div class="flex" style="font-size:11px;"><span>BAYAR</span><span>Rp ${cash.toLocaleString()}</span></div>
+            <div class="flex" style="font-weight:bold;"><span>KEMBALI</span><span>Rp ${change.toLocaleString()}</span></div>
+        ` : `<p style="text-align:right; font-weight:bold; margin: 5px 0;">LUNAS (NON-TUNAI)</p>`}
+        
+        <div class="line"></div>
+        
+        <div class="center" style="font-size: 11px; line-height: 1.5;">
+            <p style="margin: 5px 0; font-weight: bold; font-size: 12px;">✨ TERIMA KASIH ✨</p>
+            <p style="margin: 0;">Terima kasih sudah berbelanja!</p>
+            <p style="margin: 0;">Barang yang sudah dibeli tidak dapat</p>
+            <p style="margin: 0;">ditukar atau dikembalikan.</p>
+            
+            <div style="margin-top: 10px;">
+                <p style="margin: 0;">KASIR: ${currentUser}</p>
+                <p style="margin: 0;">${date}</p>
+            </div>
+            
+            <p style="margin-top: 10px; font-weight: bold;">SEMOGA HARI ANDA MENYENANGKAN</p>
+            <p style="font-style: italic; font-size: 9px; margin-top: 5px; color: #888;">MAMTECH POS v3.0</p>
+        </div>
+    </body>
         </html>
     `;
 
