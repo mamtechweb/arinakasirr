@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAMTECH POS - Ultimate v3.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#FAFAFA] text-slate-800">
+
+    <div id="login-screen" class="min-h-screen flex items-center justify-center p-6 bg-orange-50">
+        <div class="max-w-md w-full bg-white p-10 rounded-[40px] shadow-2xl text-center border border-orange-100">
+            <h1 class="text-3xl font-extrabold text-[#FF5F00] mb-2 uppercase tracking-tighter">MAMTECH LOGIN</h1>
+            <p class="text-slate-400 text-[10px] mb-8 font-black uppercase tracking-widest">Digital POS Architecture</p>
+            
+            <div class="space-y-4 text-left">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Username</label>
+                    <input type="text" id="admin-user" placeholder="Masukkan Username" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 border-none font-bold">
+                </div>
+                
+                <div class="relative">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Password</label>
+                    <input type="password" id="admin-pass" placeholder="Masukkan Sandi" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 border-none font-bold pr-14">
+                    <button type="button" onclick="togglePassword()" class="absolute right-4 top-9 text-xl hover:scale-110 transition">
+                        <span id="eye-icon">👁️</span>
+                    </button>
+                </div>
+
+                <button onclick="handleLogin()" class="w-full bg-[#FF5F00] text-white font-black py-5 rounded-2xl shadow-lg hover:bg-orange-600 transition uppercase tracking-widest mt-4">MASUK SISTEM</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-dashboard" class="hidden min-h-screen flex flex-col lg:flex-row">
+        <div class="flex-1 p-6 lg:p-10 overflow-y-auto">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 uppercase">MAMTECH <span class="text-orange-600">STORE</span></h2>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="user-badge" class="bg-orange-600 text-white text-[9px] px-2 py-0.5 rounded font-bold uppercase"></span>
+                        <span id="live-clock" class="text-[10px] font-bold text-slate-400 uppercase"></span>
+                    </div>
+                </div>
+                <button onclick="location.reload()" class="bg-white px-5 py-2 rounded-full shadow-sm text-[10px] font-black text-red-500 border border-red-50 hover:bg-red-500 hover:text-white transition uppercase">Logout</button>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="md:col-span-2 relative">
+                    <input type="text" id="search-input" onkeyup="searchProduct()" placeholder="Cari barang..." class="w-full p-5 pl-14 bg-white shadow-sm rounded-[25px] outline-none focus:ring-2 focus:ring-orange-500 border-none font-bold">
+                    <span class="absolute left-6 top-5">🔍</span>
+                </div>
+                <div class="bg-white p-4 rounded-[25px] shadow-sm border border-orange-100 overflow-hidden">
+                    <div id="reader"></div>
+                </div>
+            </div>
+
+            <div id="product-list" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6 pb-20"></div>
+        </div>
+
+        <div class="w-full lg:w-[450px] bg-white p-8 flex flex-col shadow-2xl border-l border-slate-100">
+            <h3 class="text-xl font-black uppercase mb-8 flex justify-between">Order List <span id="cart-count" class="bg-orange-100 text-[#FF5F00] px-3 py-1 rounded-full text-xs font-black">0</span></h3>
+            
+            <div id="cart-items" class="flex-1 overflow-y-auto space-y-4 custom-scrollbar"></div>
+
+            <div class="mt-8 pt-8 border-t-2 border-dashed border-slate-100 space-y-5">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400 font-bold uppercase text-[10px]">Grand Total</span>
+                    <span id="total-price" class="text-3xl font-black text-[#FF5F00]">Rp 0</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <select id="payment-method" onchange="toggleCashInput()" class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold text-slate-700 outline-none">
+                        <option value="Tunai">💵 Tunai (Cash)</option>
+                        <option value="QRIS">📱 QRIS / E-Wallet</option>
+                        <option value="Debit">💳 Kartu Debit</option>
+                    </select>
+
+                    <div id="cash-section" class="space-y-3">
+                        <input type="number" id="cash-amount" oninput="calculateChange()" placeholder="Jumlah Bayar..." class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold text-orange-600 outline-none">
+                        <div class="flex justify-between items-center bg-orange-50 p-4 rounded-2xl">
+                            <span class="text-[10px] font-bold text-orange-800 uppercase">Kembalian</span>
+                            <span id="change-display" class="font-black text-orange-600">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="prosesPembayaran()" class="w-full bg-[#FF5F00] text-white font-black py-5 rounded-[25px] shadow-xl hover:scale-[1.02] transition-transform uppercase tracking-widest mt-2">Cetak Struk</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
