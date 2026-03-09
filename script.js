@@ -1,8 +1,8 @@
 // 1. DATABASE KARYAWAN & BARANG
 const users = [
-    { username: "admin", pass: "123", role: "OWNER" },
-    { username: "karyawan1", pass: "kasir1", role: "KASIR 1" },
-    { username: "karyawan2", pass: "kasir2", role: "KASIR 2" }
+    { username: "arina", pass: "ceoarinapyp", role: "OWNER" },
+    { username: "mayasafittri", pass: "mayapyp", role: "KASIR 1" },
+    { username: "anggicahyaandini", pass: "anggipyp", role: "KASIR 2" }
 ];
 
 const products = [
